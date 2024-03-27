@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Ipws\EmailLabs\Transport;
 
-use AllowDynamicProperties;
 use Exception;
 use GuzzleHttp\ClientInterface;
 use Illuminate\Contracts\Mail\Mailable;
@@ -17,7 +16,7 @@ use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Message;
 use Symfony\Component\Mime\MessageConverter;
 
-#[AllowDynamicProperties] class EmailLabsTransport extends AbstractTransport
+class EmailLabsTransport extends AbstractTransport
 {
     //  protected string $app;
     //  protected string $secret;
@@ -45,15 +44,15 @@ use Symfony\Component\Mime\MessageConverter;
     protected string $app;
     protected array $options;
 
-    public function __construct()
+    public function __construct(array $config = [])
     {
-        $config = config('services.emaillabs');
+
+        //$config = config('services.emaillabs');
         $this->client = new ApiClient();
         $this->secret = $config['secret'];
         $this->app = $config['app'];
         $this->smtpAccount = $config['smtp'];// $config['smtp'];
         parent::__construct();
-
     }
 
 
@@ -119,14 +118,13 @@ use Symfony\Component\Mime\MessageConverter;
         try {
             $token = base64_encode($this->app . ':' . $this->secret);
             $response = Http::withOptions([
-                    'debug' => config('app.debug', false),
-                    'auth'=>[
-                        $this->app,
-                        $this->secret,'basic'
-                    ]
-                ])->post(self::ENDPOINT,['body'=>$payload]);
+                'debug' => config('app.debug', false),
+                'auth' => [
+                    $this->app,
+                    $this->secret, 'basic'
+                ]
+            ])->post(self::ENDPOINT, ['body' => $payload]);
 
-            dd($response->json());
             //$messageId = $response->get('MessageId');
             //$message->getOriginalMessage()->getHeaders()->addHeader('X-Message-ID', $messageId);
         } catch (Exception $e) {
