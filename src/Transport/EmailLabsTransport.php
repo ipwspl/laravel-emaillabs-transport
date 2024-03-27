@@ -47,8 +47,7 @@ class EmailLabsTransport extends AbstractTransport
     public function __construct(array $config = [])
     {
 
-        //$config = config('services.emaillabs');
-        $this->client = new ApiClient();
+        $this->client = new ApiClient($config);
         $this->secret = $config['secret'];
         $this->app = $config['app'];
         $this->smtpAccount = $config['smtp'];// $config['smtp'];
@@ -118,11 +117,7 @@ class EmailLabsTransport extends AbstractTransport
         try {
             $token = base64_encode($this->app . ':' . $this->secret);
             $response = Http::withOptions([
-                'debug' => config('app.debug', false),
-                'auth' => [
-                    $this->app,
-                    $this->secret, 'basic'
-                ]
+                'auth' => [$this->app, $this->secret, 'basic']
             ])->post(self::ENDPOINT, ['body' => $payload]);
 
             //$messageId = $response->get('MessageId');
@@ -130,8 +125,6 @@ class EmailLabsTransport extends AbstractTransport
         } catch (Exception $e) {
             throw $e;
         }
-
-
     }
 
     /**

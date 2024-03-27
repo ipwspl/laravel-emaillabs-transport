@@ -38,9 +38,9 @@ class ApiClient
     protected $client;
     protected array $options;
 
-    public function __construct()
+    public function __construct($config)
     {
-        $config = config('services.emaillabs');
+     //   $config = config('services.emaillabs');
         $this->secret = $config['secret'];
         $this->app = $config['app'];
         $this->smtpAccount = $config['smtp'];
