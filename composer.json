@@ -1,6 +1,8 @@
 {
     "name": "ipws/laravel-emaillabs-transport",
     "description": "Emaillabs mailer transport for Laravel",
+    "type": "laravel-library",
+    "version": "1.0.0",
     "require": {
         "php": "^8.1",
         "vlucas/phpdotenv": "^5.4.1",
