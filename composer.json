@@ -1,0 +1,20 @@
+{
+    "name": "ipws/laravel-emaillabs-transport",
+    "description": "Emaillabs mailer transport for Laravel",
+    "require": {
+        "php": "^8.1"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Ipws\\EmailLabs\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Łukasz Witkowski",
+            "email": "witkowski@ipws.pl"
+        }
+    ],
+    "minimum-stability": "beta"
+}
