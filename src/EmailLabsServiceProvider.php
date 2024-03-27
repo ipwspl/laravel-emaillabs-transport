@@ -12,24 +12,19 @@ class EmailLabsServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        $this->publishes([
-            __DIR__ . '/../config/config.php' => config_path('emaillabs.php'),
-        ], 'config');
-
         $this->registerEmailLabsTransport();
     }
 
     protected function registerEmailLabsTransport()
     {
         Mail::extend('emaillabs', function(){
-            $config = $this->app['config']->get('emaillabs', []);
-            //$client = $this->getHttpClient($config);
+            $config = $this->app['config']->get('services.emaillabs', []);
             return new EmailLabsTransport($config);
         });
     }
 
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'emaillabs');
+        //$this->mergeConfigFrom(__DIR__ . '/../config/config.php', 'emaillabs');
     }
 }
